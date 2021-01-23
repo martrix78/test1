@@ -3,7 +3,22 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  apiEndpoint: 'https://randomuser.me/api',
+  defaultProf: [
+    {
+      duty: ['Руководить', ' Не руководить'],
+      id: null,
+      name: 'Директор',
+      salary: 100
+    },
+    {
+      duty: ['Копать', ' Не копать'],
+      id: null,
+      name: 'Дворник',
+      salary: 100
+    },
+  ],
 };
 
 /*

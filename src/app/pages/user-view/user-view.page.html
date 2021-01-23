@@ -1,0 +1,39 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/home" class="backlink" mode="md"></ion-back-button>
+        </ion-buttons>
+        <ion-title>Просмотр пользователя</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <div style="margin: 10px;">
+        <ion-button STYLE="width: 100%" (click)="gotoEdit()">Редактировать</ion-button>
+    </div>
+    <ion-list>
+        <ion-item>
+            <img alt="" style="width: 100%" [src]="data.avatar? data.avatar : '/assets/user.png'"/>
+        </ion-item>
+        <ion-item>
+            {{data.firstName}}
+        </ion-item>
+        <ion-item>
+            {{data.lastName}}
+        </ion-item>
+        <ion-item>
+            {{data.dob | date: 'd MMMM yyyy' : null : 'ru'}}
+        </ion-item>
+        <ion-list-header [hidden]="data.profession.length === 0">Профессии</ion-list-header>
+        <ion-item *ngFor="let prof of data.profession">
+            <p>{{prof.name}}</p>
+            <ion-chip color="primary" *ngFor="let elem of prof.duty; let i = index" [hidden]="i>1">
+                {{elem}}
+            </ion-chip>
+        </ion-item>
+        <ion-list-header [hidden]="users.length === 0">Юзера с сходными обязанностями</ion-list-header>
+        <ion-item *ngFor="let user of users">
+            {{user.firstName}} {{user.lastName}}
+        </ion-item>
+    </ion-list>
+</ion-content>

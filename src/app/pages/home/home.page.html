@@ -1,0 +1,68 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Юзера
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">
+        Юзера
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-fab horizontal="end" vertical="top" slot="fixed" edge>
+    <ion-fab-button routerLink="/user-edit">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  <div style="margin: 10px;">
+    <ion-button STYLE="width: 100%" routerLink="/profession">Профессии</ion-button>
+  </div>
+  <div style="margin: 10px;">
+    <ion-searchbar (ionChange)="search($event)"></ion-searchbar>
+  </div>
+  <div *ngIf="showSkeleton">
+    <ion-card *ngFor="let i of sceletonArray">
+      <ion-skeleton-text animated="" style="width: 100%;height: 138px;"></ion-skeleton-text>
+    </ion-card>
+  </div>
+  <div *ngIf="!showSkeleton">
+    <ion-card *ngFor="let user of users | async">
+      <ion-card-content>
+        <ion-grid>
+          <ion-row>
+            <ion-col size="3">
+              <ion-avatar>
+                <img alt="" style="width: 50px;" [src]="user.avatar? user.avatar : '/assets/user.png'"/>
+              </ion-avatar>
+            </ion-col>
+            <ion-col size="9">
+              <strong>{{user.firstName}} {{user.lastName}}</strong><br>
+              {{user.dob | date: 'd MMMM yyyy' : null : 'ru'}}
+            </ion-col>
+          </ion-row>
+          <ion-row *ngIf="user.profession !== null && user.profession.length">
+            <ion-col size="12">
+              <ion-chip color="primary" *ngFor="let prof of user.profession; let i = index" [hidden]="i>1">
+                {{prof.name}}
+              </ion-chip>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="6">
+              <ion-button (click)="gotoView(user)" color="primary"> Смотреть</ion-button>
+            </ion-col>
+            <ion-col size="6">
+              <ion-button (click)="deleteUser(user)" color="danger"> Удалить</ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

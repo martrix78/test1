@@ -1,0 +1,66 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/home" class="backlink" mode="md"></ion-back-button>
+        </ion-buttons>
+        <ion-title [innerText]="isNew? 'Добавить юзера' : 'Редактировать юзера'"></ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <form *ngIf="form" novalidate [formGroup]="form">
+        <ion-list>
+            <ion-item>
+                <ion-label position="floating">Имя</ion-label>
+                <ion-input formControlName="firstName"></ion-input>
+                <ul class="form-errors"
+                    *ngIf="form.controls['firstName'].invalid && form.controls['firstName'].touched">
+                    <li *ngIf="form.controls['firstName'] && form.controls['firstName'].errors.required">
+                        Надо заполнить
+                    </li>
+                </ul>
+            </ion-item>
+            <ion-item>
+                <ion-label position="floating">Фамилия</ion-label>
+                <ion-input formControlName="lastName"></ion-input>
+                <ul class="form-errors"
+                    *ngIf="form.controls['lastName'].invalid && form.controls['lastName'].touched">
+                    <li *ngIf="form.controls['lastName'] && form.controls['lastName'].errors.required">
+                        Надо заполнить
+                    </li>
+                </ul>
+            </ion-item>
+            <ion-item>
+                <ion-label position="floating">День рождения</ion-label>
+                <ion-datetime formControlName="dob"></ion-datetime>
+                <ul class="form-errors"
+                    *ngIf="form.controls['dob'].invalid && form.controls['dob'].touched">
+                    <li *ngIf="form.controls['dob'] && form.controls['dob'].errors.required">
+                        Надо заполнить
+                    </li>
+                </ul>
+            </ion-item>
+            <ion-item>
+                <ion-label position="floating">Аватар</ion-label>
+                <ion-input formControlName="avatar"></ion-input>
+                <ul class="form-errors"
+                    *ngIf="form.controls['avatar'].invalid && form.controls['avatar'].touched">
+                    <li *ngIf="form.controls['avatar'] && form.controls['avatar'].errors.required">
+                        Надо заполнить
+                    </li>
+                </ul>
+
+            </ion-item>
+            <ion-list-header>Профессии</ion-list-header>
+            <ion-list formArrayName="profession">
+                <ion-item *ngFor="let elem of form.controls['profession']['controls']; let i = index">
+                    <ion-label>{{professions[i].name}}</ion-label>
+                    <ion-checkbox slot="end" formControlName="{{i}}"></ion-checkbox>
+                </ion-item>
+            </ion-list>
+        </ion-list>
+        <div style="margin: 20px;">
+            <ion-button expand="block" (click)="save()">Сохранить</ion-button>
+        </div>
+    </form>
+</ion-content>
